@@ -18,7 +18,6 @@ def xls2yaml(path, output_path)
     else
     	makefile = "#{output_path}/#{path}"
     end
-    puts makefile
     filename = getAbsolutePath(path)		#Excelで開くファイルのパス指定
     xl = WIN32OLE.new('Excel.Application')	#Excel起動
     book = xl.Workbooks.Open(filename)		#ExcelFileを開く
@@ -26,15 +25,18 @@ def xls2yaml(path, output_path)
     output_file = File.open("#{makefile}.yaml", "w")#出力用yamlファイルの作成と展開
     
     book.Worksheets.each do |sheet|		#対象のブックのすべてのシートに処理
-      sheet.UsedRange.Rows.each do |row|	#ワークシートの使用している範囲を一行ごとに取り出す
-        record = []				#出力用配列の初期化
-        row.Columns.each do |cell|
-	  record << cell.Value
-	end
-        output_file.write("#{record.to_yaml}\n")    #出力用ファイルに書き込み
+      puts sheet.Name
+      sheet.Name.scan(/eet/){			#条件にあったシート名のみ処理
+        sheet.UsedRange.Rows.each do |row|	#ワークシートの使用している範囲を一行ごとに取り出す
+          record = []				#出力用配列の初期化
+          row.Columns.each do |cell|
+	    record << cell.Value
+	  end
+          output_file.write("#{record.to_yaml}\n")    #出力用ファイルに書き込み
+        end
+        output_file.write("\n")
+      }
       end
-      output_file.write("\n")
-    end
   ensure
     book.Close		#Bookを閉じる
     xl.Quit		#Excel終了
