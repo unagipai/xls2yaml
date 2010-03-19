@@ -1,14 +1,10 @@
-require 'win32ole'
+require 'rubygems'
+require 'spreadsheet'
+
 require 'find'
 require 'yaml'
 require 'yaml_waml'
-
-
-#引数に与えたxlsファイルのセル内容をすべて出力する
-def getAbsolutePath filename
-  fso = WIN32OLE.new('Scripting.FileSystemObject')
-  return fso.GetAbsolutePathName(filename)
-end
+Spreadsheet.client_encoding = 'cp932'
 
 #ファイルに書き出し
 def xls2yaml(path, output_path)
@@ -18,38 +14,41 @@ def xls2yaml(path, output_path)
     else
     	makefile = "#{output_path}/#{path}"
     end
-    filename = getAbsolutePath(path)		#Excelで開くファイルのパス指定
-    xl = WIN32OLE.new('Excel.Application')	#Excel起動
-    book = xl.Workbooks.Open(filename)		#ExcelFileを開く
 
+    book = Spreadsheet.open(path, 'rb')
     output_file = File.open("#{makefile}.yaml", "w")#出力用yamlファイルの作成と展開
     
-    book.Worksheets.each do |sheet|		#対象のブックのすべてのシートに処理
-      #puts sheet.Name
-      #sheet.Name.scan(/eet/){			#条件にあったシート名のみ処理
+    book.worksheets.each do |sheet|		#対象のブックのすべてのシートに処理
 	record = []
-        sheet.UsedRange.Rows.each do |row|	#ワークシートの使用している範囲を一行ごとに取り出す
-	  record << row.Columns.Value
-        end
-	puts record.to_yaml
+	#sheet.map do |row|
+	  #record << row.to_a.join()
+	  #puts row.to_a.join().to_yaml
+   	#end
+	sheet.each do |row|
+	  record_row = []
+	  row.each do |cell|
+	    record_row.push cell.to_s
+	  end
+	  record.push record_row
+	  #puts record_row.to_yaml
+	  #output_file.write("#{record_row.to_yaml}")
+	end
+	#puts record.to_yaml
         output_file.write("#{record.to_yaml}")    #出力用ファイルに書き込み
-      #}
-      end
+    end
   ensure
-    book.Close		#Bookを閉じる
-    xl.Quit		#Excel終了
     output_file.close 	#出力用ファイルを閉じる
   end
 end
 
 # ディレクトリを処理する
-def proc_directory(path, out_path)
-  Find.find(path) do |file|
-    if(File.file?(file) && File.extname(file) == '.xls' ) then
-      xls2yaml(file, out_path)
-    end
-  end
-end
+#def proc_directory(path, out_path)
+#  Find.find(path) do |file|
+#    if(File.file?(file) && File.extname(file) == '.xls' ) then
+#      xls2yaml(file, out_path)
+#    end
+#  end
+#end
 
 # 使い方
 def usage
