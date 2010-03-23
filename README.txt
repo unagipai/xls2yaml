@@ -1,9 +1,9 @@
-ƒtƒ@ƒCƒ‹à–¾
+ï»¿ãƒ•ã‚¡ã‚¤ãƒ«èª¬æ˜Ž
 
-xls2yaml.rb->WIN32OLE‚ðŽg—p‚µ‚½ê‡‚Ìƒ\[ƒXƒtƒ@ƒCƒ‹
+xls2yaml.rb->WIN32OLEã‚’ä½¿ç”¨ã—ãŸå ´åˆã®ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«
 
-xls2yaml_not_used_xls.rb->Excel‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚È‚¢ŠÂ‹«‚Å‚à‹N“®‰Â”\‚Èƒ\[ƒXƒtƒ@ƒCƒ‹
+xls2yaml_not_used_xls.rb->ExcelãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ãªã„ç’°å¢ƒã§ã‚‚èµ·å‹•å¯èƒ½ãªã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«
 
-not_used_xls.rb->Excel‚ðŽg—p‚¹‚¸‚Éƒtƒ@ƒCƒ‹‚ðˆ—‚·‚é‚½‚ß‚ÌŽQlƒ\[ƒXƒtƒ@ƒCƒ‹
+not_used_xls.rb->Excelã‚’ä½¿ç”¨ã›ãšã«ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‡¦ç†ã™ã‚‹ãŸã‚ã®å‚è€ƒã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«
 
-sample1.xls->ƒXƒNƒŠƒvƒg‹N“®—p‚ÌƒTƒ“ƒvƒ‹xlsƒtƒ@ƒCƒ‹
+sample1.xls->ã‚¹ã‚¯ãƒªãƒ—ãƒˆèµ·å‹•ç”¨ã®ã‚µãƒ³ãƒ—ãƒ«xlsãƒ•ã‚¡ã‚¤ãƒ«
