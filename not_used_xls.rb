@@ -4,17 +4,17 @@ require 'rubygems'
 require 'spreadsheet'
 require 'find'
 
-# ExcelƒNƒ‰ƒCƒAƒ“ƒg‚Ì•¶šƒR[ƒh‚ğw’è
+# Excelã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’æŒ‡å®š
 Spreadsheet.client_encoding = 'cp932'
 
-# ƒ[ƒNƒV[ƒg‚ğƒ^ƒu‹æØ‚è‚Ì•¶š—ñ‚É•ÏŠ·
+# ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã‚’ã‚¿ãƒ–åŒºåˆ‡ã‚Šã®æ–‡å­—åˆ—ã«å¤‰æ›
 def csv(sheet)
   sheet.inject([]) do |result, item|
     result.push item.join("\t")
   end.join("\n")
 end
 
-# ƒtƒ@ƒCƒ‹‚ğˆ—‚·‚é
+# ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‡¦ç†ã™ã‚‹
 def proc_file(path)
   book = Spreadsheet.open(path, 'rb')
   book.worksheets.each do |sheet|
@@ -22,7 +22,7 @@ def proc_file(path)
   end
 end
 
-# ƒfƒBƒŒƒNƒgƒŠ‚ğˆ—‚·‚é
+# ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å‡¦ç†ã™ã‚‹
 def proc_directory(path)
   Find.find(path) do |file|
     if(File.file?(file) && File.extname(file) == '.xls' ) then
@@ -31,7 +31,7 @@ def proc_directory(path)
   end
 end
 
-# g‚¢•û
+# ä½¿ã„æ–¹
 def usage
   puts "usage:"
   puts "  ruby #{__FILE__} [filename]"
@@ -45,9 +45,9 @@ end
 
 target = ARGV[0]
 
-if(File.file?(target)) then # ƒtƒ@ƒCƒ‹‚ª“n‚³‚ê‚½
+if(File.file?(target)) then # ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¸¡ã•ã‚ŒãŸ
   proc_file(target) 
-elsif(File.directory?(target)) then # ƒfƒBƒŒƒNƒgƒŠ‚ª“n‚³‚ê‚½
+elsif(File.directory?(target)) then # ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒæ¸¡ã•ã‚ŒãŸ
   proc_directory(target)
 else
   usage

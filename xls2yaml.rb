@@ -4,13 +4,13 @@ require 'yaml'
 require 'yaml_waml'
 
 
-#ˆø”‚É—^‚¦‚½xlsƒtƒ@ƒCƒ‹‚ÌƒZƒ‹“à—e‚ğ‚·‚×‚Äo—Í‚·‚é
+#å¼•æ•°ã«ä¸ãˆãŸxlsãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚»ãƒ«å†…å®¹ã‚’ã™ã¹ã¦å‡ºåŠ›ã™ã‚‹
 def getAbsolutePath filename
   fso = WIN32OLE.new('Scripting.FileSystemObject')
   return fso.GetAbsolutePathName(filename)
 end
 
-#ƒtƒ@ƒCƒ‹‚É‘‚«o‚µ
+#ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãå‡ºã—
 def xls2yaml(path, output_path)
   begin
     if output_path == nil then
@@ -18,31 +18,31 @@ def xls2yaml(path, output_path)
     else
     	makefile = "#{output_path}/#{path}"
     end
-    filename = getAbsolutePath(path)		#Excel‚ÅŠJ‚­ƒtƒ@ƒCƒ‹‚ÌƒpƒXw’è
-    xl = WIN32OLE.new('Excel.Application')	#Excel‹N“®
-    book = xl.Workbooks.Open(filename)		#ExcelFile‚ğŠJ‚­
+    filename = getAbsolutePath(path)		#Excelã§é–‹ããƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹æŒ‡å®š
+    xl = WIN32OLE.new('Excel.Application')	#Excelèµ·å‹•
+    book = xl.Workbooks.Open(filename)		#ExcelFileã‚’é–‹ã
 
-    output_file = File.open("#{makefile}.yaml", "w")#o—Í—pyamlƒtƒ@ƒCƒ‹‚Ìì¬‚Æ“WŠJ
+    output_file = File.open("#{makefile}.yaml", "w")#å‡ºåŠ›ç”¨yamlãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆã¨å±•é–‹
     
-    book.Worksheets.each do |sheet|		#‘ÎÛ‚ÌƒuƒbƒN‚Ì‚·‚×‚Ä‚ÌƒV[ƒg‚Éˆ—
+    book.Worksheets.each do |sheet|		#å¯¾è±¡ã®ãƒ–ãƒƒã‚¯ã®ã™ã¹ã¦ã®ã‚·ãƒ¼ãƒˆã«å‡¦ç†
       #puts sheet.Name
-      #sheet.Name.scan(/eet/){			#ğŒ‚É‚ ‚Á‚½ƒV[ƒg–¼‚Ì‚İˆ—
+      #sheet.Name.scan(/eet/){			#æ¡ä»¶ã«ã‚ã£ãŸã‚·ãƒ¼ãƒˆåã®ã¿å‡¦ç†
 	record = []
-        sheet.UsedRange.Rows.each do |row|	#ƒ[ƒNƒV[ƒg‚Ìg—p‚µ‚Ä‚¢‚é”ÍˆÍ‚ğˆês‚²‚Æ‚Éæ‚èo‚·
+        sheet.UsedRange.Rows.each do |row|	#ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã®ä½¿ç”¨ã—ã¦ã„ã‚‹ç¯„å›²ã‚’ä¸€è¡Œã”ã¨ã«å–ã‚Šå‡ºã™
 	  record << row.Columns.Value
         end
 	puts record.to_yaml
-        output_file.write("#{record.to_yaml}")    #o—Í—pƒtƒ@ƒCƒ‹‚É‘‚«‚İ
+        output_file.write("#{record.to_yaml}")    #å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã¿
       #}
       end
   ensure
-    book.Close		#Book‚ğ•Â‚¶‚é
-    xl.Quit		#ExcelI—¹
-    output_file.close 	#o—Í—pƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+    book.Close		#Bookã‚’é–‰ã˜ã‚‹
+    xl.Quit		#Excelçµ‚äº†
+    output_file.close 	#å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
   end
 end
 
-# ƒfƒBƒŒƒNƒgƒŠ‚ğˆ—‚·‚é
+# ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å‡¦ç†ã™ã‚‹
 def proc_directory(path, out_path)
   Find.find(path) do |file|
     if(File.file?(file) && File.extname(file) == '.xls' ) then
@@ -51,7 +51,7 @@ def proc_directory(path, out_path)
   end
 end
 
-# g‚¢•û
+# ä½¿ã„æ–¹
 def usage
   puts "usage:"
   puts "  ruby #{__FILE__} [filename]"
@@ -68,17 +68,17 @@ if ARGV[0].empty?
   exit
 end
 
-target = ARGV[0]		#ˆ—‘ÎÛExcelƒtƒ@ƒCƒ‹—pˆø”w’è
+target = ARGV[0]		#å‡¦ç†å¯¾è±¡Excelãƒ•ã‚¡ã‚¤ãƒ«ç”¨å¼•æ•°æŒ‡å®š
 
-if(File.file?(target)) then 	#ƒtƒ@ƒCƒ‹‚ª“n‚³‚ê‚½
-	output_path = []	#•Û‘¶æw’è—p”z—ñ‚Ì‰Šú‰»
-	output_path = ARGV[1] 	#•Û‘¶æw’è—pˆø”w’è
+if(File.file?(target)) then 	#ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¸¡ã•ã‚ŒãŸ
+	output_path = []	#ä¿å­˜å…ˆæŒ‡å®šç”¨é…åˆ—ã®åˆæœŸåŒ–
+	output_path = ARGV[1] 	#ä¿å­˜å…ˆæŒ‡å®šç”¨å¼•æ•°æŒ‡å®š
     if(File.file?(target) && File.extname(target) == '.xls' ) then
   	xls2yaml(target, output_path)
     else
-	file_format_error	#ƒGƒ‰[“à—e•\¦
+	file_format_error	#ã‚¨ãƒ©ãƒ¼å†…å®¹è¡¨ç¤º
     end
-#elsif(File.directory?(target)) then #ƒfƒBƒŒƒNƒgƒŠ‚ª“n‚³‚ê‚½
+#elsif(File.directory?(target)) then #ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒæ¸¡ã•ã‚ŒãŸ
   #proc_directory(target, output_path)
 else
   usage

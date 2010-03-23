@@ -6,7 +6,7 @@ require 'yaml'
 require 'yaml_waml'
 Spreadsheet.client_encoding = 'cp932'
 
-#ƒtƒ@ƒCƒ‹‚É‘‚«o‚µ
+#ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãå‡ºã—
 def xls2yaml(path, output_path)
   begin
     if output_path == nil then
@@ -16,9 +16,9 @@ def xls2yaml(path, output_path)
     end
 
     book = Spreadsheet.open(path, 'rb')
-    output_file = File.open("#{makefile}.yaml", "w")#o—Í—pyamlƒtƒ@ƒCƒ‹‚Ìì¬‚Æ“WŠJ
+    output_file = File.open("#{makefile}.yaml", "w")#å‡ºåŠ›ç”¨yamlãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆã¨å±•é–‹
     
-    book.worksheets.each do |sheet|		#‘ÎÛ‚ÌƒuƒbƒN‚Ì‚·‚×‚Ä‚ÌƒV[ƒg‚Éˆ—
+    book.worksheets.each do |sheet|		#å¯¾è±¡ã®ãƒ–ãƒƒã‚¯ã®ã™ã¹ã¦ã®ã‚·ãƒ¼ãƒˆã«å‡¦ç†
 	record = []
 	#sheet.map do |row|
 	  #record << row.to_a.join()
@@ -34,14 +34,14 @@ def xls2yaml(path, output_path)
 	  #output_file.write("#{record_row.to_yaml}")
 	end
 	#puts record.to_yaml
-        output_file.write("#{record.to_yaml}")    #o—Í—pƒtƒ@ƒCƒ‹‚É‘‚«‚İ
+        output_file.write("#{record.to_yaml}")    #å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã¿
     end
   ensure
-    output_file.close 	#o—Í—pƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+    output_file.close 	#å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
   end
 end
 
-# ƒfƒBƒŒƒNƒgƒŠ‚ğˆ—‚·‚é
+# ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å‡¦ç†ã™ã‚‹
 #def proc_directory(path, out_path)
 #  Find.find(path) do |file|
 #    if(File.file?(file) && File.extname(file) == '.xls' ) then
@@ -50,7 +50,7 @@ end
 #  end
 #end
 
-# g‚¢•û
+# ä½¿ã„æ–¹
 def usage
   puts "usage:"
   puts "  ruby #{__FILE__} [filename]"
@@ -67,17 +67,17 @@ if ARGV[0].empty?
   exit
 end
 
-target = ARGV[0]		#ˆ—‘ÎÛExcelƒtƒ@ƒCƒ‹—pˆø”w’è
+target = ARGV[0]		#å‡¦ç†å¯¾è±¡Excelãƒ•ã‚¡ã‚¤ãƒ«ç”¨å¼•æ•°æŒ‡å®š
 
-if(File.file?(target)) then 	#ƒtƒ@ƒCƒ‹‚ª“n‚³‚ê‚½
-	output_path = []	#•Û‘¶æw’è—p”z—ñ‚Ì‰Šú‰»
-	output_path = ARGV[1] 	#•Û‘¶æw’è—pˆø”w’è
+if(File.file?(target)) then 	#ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¸¡ã•ã‚ŒãŸ
+	output_path = []	#ä¿å­˜å…ˆæŒ‡å®šç”¨é…åˆ—ã®åˆæœŸåŒ–
+	output_path = ARGV[1] 	#ä¿å­˜å…ˆæŒ‡å®šç”¨å¼•æ•°æŒ‡å®š
     if(File.file?(target) && File.extname(target) == '.xls' ) then
   	xls2yaml(target, output_path)
     else
-	file_format_error	#ƒGƒ‰[“à—e•\¦
+	file_format_error	#ã‚¨ãƒ©ãƒ¼å†…å®¹è¡¨ç¤º
     end
-#elsif(File.directory?(target)) then #ƒfƒBƒŒƒNƒgƒŠ‚ª“n‚³‚ê‚½
+#elsif(File.directory?(target)) then #ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒæ¸¡ã•ã‚ŒãŸ
   #proc_directory(target, output_path)
 else
   usage
