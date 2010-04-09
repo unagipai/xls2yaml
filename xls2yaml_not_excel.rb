@@ -4,7 +4,9 @@ require 'spreadsheet'
 require 'find'
 require 'yaml'
 require 'yaml_waml'
-Spreadsheet.client_encoding = 'cp932'
+#Spreadsheet.client_encoding = 'UTF-8'
+Spreadsheet.client_encoding = 'Windows-31J'
+#Spreadsheet.client_encoding = 'cp932'
 
 #ファイルに書き出し
 def xls2yaml(path, output_path)
@@ -18,23 +20,22 @@ def xls2yaml(path, output_path)
     book = Spreadsheet.open(path, 'rb')
     output_file = File.open("#{makefile}.yaml", "w")#出力用yamlファイルの作成と展開
     
+    puts ("#{makefile}---->#{makefile}.yaml")
+    
     book.worksheets.each do |sheet|		#対象のブックのすべてのシートに処理
 	record = []
-	#sheet.map do |row|
-	  #record << row.to_a.join()
-	  #puts row.to_a.join().to_yaml
-   	#end
-	sheet.each do |row|
+	puts sheet.name
+#=begin
+	sheet.each do |row|  #stop_fileはここでエラーになり停止する
 	  record_row = []
 	  row.each do |cell|
 	    record_row.push cell.to_s
 	  end
 	  record.push record_row
-	  #puts record_row.to_yaml
-	  #output_file.write("#{record_row.to_yaml}")
 	end
 	#puts record.to_yaml
-        output_file.write("#{record.to_yaml}")    #出力用ファイルに書き込み
+      output_file.write("#{record.to_yaml}")    #出力用ファイルに書き込み
+#=end
     end
   ensure
     output_file.close 	#出力用ファイルを閉じる
@@ -42,19 +43,19 @@ def xls2yaml(path, output_path)
 end
 
 # ディレクトリを処理する
-#def proc_directory(path, out_path)
-#  Find.find(path) do |file|
-#    if(File.file?(file) && File.extname(file) == '.xls' ) then
-#      xls2yaml(file, out_path)
-#    end
-#  end
-#end
+def proc_directory(path, out_path)
+  Find.find(path) do |file|
+    if(File.file?(file) && File.extname(file) == '.xls' ) then
+      xls2yaml(file, out_path)
+    end
+  end
+end
 
 # 使い方
 def usage
   puts "usage:"
   puts "  ruby #{__FILE__} [filename]"
-  #puts "  ruby #{__FILE__} [dirname]"
+  puts "  ruby #{__FILE__} [dirname]"
 end
 
 def file_format_error
@@ -77,8 +78,8 @@ if(File.file?(target)) then 	#ファイルが渡された
     else
 	file_format_error	#エラー内容表示
     end
-#elsif(File.directory?(target)) then #ディレクトリが渡された
-  #proc_directory(target, output_path)
+elsif(File.directory?(target)) then #ディレクトリが渡された
+  proc_directory(target, output_path)
 else
   usage
   exit
